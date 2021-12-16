@@ -68,6 +68,9 @@ class Wall:
                     
     # Draws the faces
     def draw(self):
-        # A compléter en remplaçant pass par votre code
-        pass
-  
+        gl.glPushMatrix()
+        gl.glRotate(self.parameters['orientation'],0,0,1)
+        self.parentSection.drawEdges()
+        for i in self.objects :
+          i.draw()  
+        gl.glPopMatrix()

@@ -46,14 +46,33 @@ class Opening:
 
     # Defines the vertices and faces        
     def generate(self):
-        self.vertices = [ 
-                # Définir ici les sommets
+      self.vertices = [
+                [0,0,0],
+                [self.parameters['width'],0,0],
+                [self.parameters['width'],0,self.parameters['height']],
+                [0,0,self.parameters['height']],
+                [0,self.parameters['thickness'],0],
+                [self.parameters['width'],self.parameters['thickness'],0],
+                [self.parameters['width'],self.parameters['thickness'],self.parameters['height']],
+                [0,self.parameters['thickness'],self.parameters['height']]
                 ]
-        self.faces = [
-                # définir ici les faces
+      self.faces = [
+                [0,3,7,4],
+                [0,1,5,4],
+                [1,2,6,5],
+                [2,3,7,6]
                 ]   
+   
         
     # Draws the faces                
     def draw(self):        
-        # A compléter en remplaçant pass par votre code
-        pass
+        gl.glPushMatrix()
+        gl.glTranslate(self.parameters['position'][0],self.parameters['position'][1],self.parameters['position'][2])
+        gl.glPolygonMode(gl.GL_FRONT_AND_BACK,gl.GL_FILL) # on trace les faces : GL_FILL
+        gl.glBegin(gl.GL_QUADS) #Trace d'un quadrilatere
+        gl.glColor3fv([0.5, 0.5, 0.5]) # Couleur gris moyen
+        for f in self.faces :
+          for k in f :
+            gl.glVertex3fv(self.vertices[k])
+        gl.glEnd()
+        gl.glPopMatrix()
